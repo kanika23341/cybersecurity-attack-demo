@@ -1,0 +1,32 @@
+{% extends "base.html" %}{% block content %}
+<h1>Restaurant management</h1>
+<p>This area is used by restaurant staff to manage menu items and incoming orders.</p>
+<div class="stat">
+    <b>Menu items</b>
+    <br>{{ menu|length }}
+</div>
+<div class="stat">
+    <b>Orders</b>
+    <br>{{ orders|length }}
+</div>
+<p><a class="btn" href="/restaurant/menu">Manage menu</a></p>
+<h2>Incoming orders</h2>
+<table>
+    <tr>
+        <th>Order</th>
+        <th>Customer</th>
+        <th>Items</th>
+        <th>Total</th>
+        <th>Status</th>
+    </tr>
+    {% for id,order in orders.items() %}
+    <tr>
+        <td>{{id}}</td>
+        <td>{{order.customer}}</td>
+        <td>{{order.items}}</td>
+        <td>₹{{order.total}}</td>
+        <td>{{order.status}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

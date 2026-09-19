@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block content %}
+<h1>Order #{{order_id}}</h1>
+<div class="card">
+    <p><b>Customer:</b> {{order.customer}}</p>
+    <p><b>Items:</b> {{order.items}}</p>
+    <p><b>Total:</b> ₹{{order.total}}</p>
+    <p><b>Status:</b> {{order.status}}</p>
+</div>
+{% endblock %}

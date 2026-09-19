@@ -1,0 +1,104 @@
+{% extends "base.html" %}{% block content %}
+<a class="btn" href="/">Back</a>
+<div class="result">
+    <h1>Brute-force attack running</h1>
+    <p>The attack page is sending real login requests to the local restaurant account.</p>
+
+    <div class="terminal" id="terminal">
+        <div>&gt; Target: 127.0.0.1:5000/login</div>
+        <div>&gt; Username: restaurant</div>
+        <div>&gt; Password space: 0000 → 9999</div>
+        <div>&gt; Mode: sequential enumeration</div>
+        <div id="liveLine">&gt; Preparing...</div>
+    </div>
+
+    <div class="progress">
+        <b>Live brute-force progress</b>
+        <div class="bar"><div class="fill" id="fill"></div></div>
+        <div id="progressText">Attempts: 0 / 10,000</div>
+    </div>
+
+    <div class="attempt-box">
+        <div class="label">Current candidate</div>
+        <div class="candidate" id="candidate">----</div>
+        <div class="status" id="status">Waiting for first request...</div>
+    </div>
+
+    <div class="steps">
+        <div id="step1">1. Generate 4-digit candidate</div>
+        <div id="step2">2. Send login request</div>
+        <div id="step3">3. Check response</div>
+        <div id="step4">4. Stop when accepted</div>
+    </div>
+
+    <div id="done" class="done" style="display:none"></div>
+</div>
+
+<script>
+const jobId = {{ job_id|tojson }};
+const fill = document.getElementById("fill");
+const progressText = document.getElementById("progressText");
+const candidate = document.getElementById("candidate");
+const status = document.getElementById("status");
+const liveLine = document.getElementById("liveLine");
+const done = document.getElementById("done");
+const terminal = document.getElementById("terminal");
+let lastAttempt = 0;
+
+function markStep(n) {
+    for (let i = 1; i <= 4; i++) {
+        const el = document.getElementById("step" + i);
+        el.classList.toggle("active", i <= n);
+    }
+}
+
+async function poll() {
+    try {
+        const response = await fetch("/brute/status/" + jobId, {cache: "no-store"});
+        const data = await response.json();
+        const total = data.total || 10000;
+        const attempts = data.attempts || 0;
+        const pct = Math.round((attempts / total) * 100);
+
+        fill.style.width = pct + "%";
+        progressText.textContent = "Attempts: " + attempts.toLocaleString() + " / " + total.toLocaleString() + "  (" + pct + "%)";
+        candidate.textContent = data.current || "----";
+        status.textContent = data.message || "Checking...";
+        liveLine.textContent = "> " + (data.message || "Checking...");
+
+        if (attempts > lastAttempt) {
+            markStep(3);
+            lastAttempt = attempts;
+            const line = document.createElement("div");
+            line.textContent = "[" + String(attempts).padStart(4, "0") + "] " + (data.current || "----") + " → " + (data.last_status === 302 ? "302 ACCEPTED" : "rejected");
+            terminal.appendChild(line);
+            // Keep the latest terminal activity visible.
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        if (data.status === "success") {
+            markStep(4);
+            status.textContent = "MATCH FOUND — restaurant login accepted";
+            done.innerHTML = "<strong>Password found.</strong><br>Restaurant access has been unlocked. The password is intentionally not displayed here.<br><br><a class='btn' href='" + data.url + "' target='_blank'>Open restaurant side</a>";
+            done.style.display = "block";
+            return;
+        }
+
+        if (data.status === "failed" || data.status === "error") {
+            done.textContent = data.message || "Attack stopped.";
+            done.style.display = "block";
+            return;
+        }
+
+        markStep(attempts ? 3 : 1);
+        setTimeout(poll, 120);
+    } catch (err) {
+        status.textContent = "Waiting for attack process...";
+        setTimeout(poll, 300);
+    }
+}
+
+markStep(1);
+poll();
+</script>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block content %}
+<h1>Security</h1>
+<div class="grid">
+<div class="card">
+    <h3>Login</h3><p>Password protection and account access.</p></div>
+<div class="card">
+    <h3>Payments</h3><p>Payment information should be protected and tokenized.</p></div>
+<div class="card">
+    <h3>Orders</h3><p>Every order request should verify the logged-in user.</p></div>
+<div class="card">
+    <h3>Restaurant</h3><p>Restaurant functions should check staff authorization.</p></div>
+<div class="card">
+    <h3>API</h3><p>APIs should require authentication and rate limiting.</p></div>
+<div class="card">
+    <h3>Input</h3><p>Application input should be validated before processing.</p></div>
+</div>
+{% endblock %}

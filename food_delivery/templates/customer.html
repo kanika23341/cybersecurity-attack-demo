@@ -1,0 +1,29 @@
+{% extends "base.html" %}{% block content %}
+<h1>Customer area</h1>
+<p>Browse food and view your orders.</p>
+<div class="grid">
+{% for item in menu %}
+<div class="card">
+    <h3>{{item.name}}</h3>
+    <div class="price">
+        ₹{{item.price}}
+    </div>
+</div>
+{% endfor %}
+</div>
+<h2>Your recent order</h2>
+<table>
+    <tr>
+        <th>Order</th>
+        <th>Items</th>
+        <th>Total</th>
+        <th>Status</th>
+    </tr>
+    <tr>
+        <td>1001</td>
+        <td>{{orders[1001].items}}</td>
+        <td>₹{{orders[1001].total}}</td>
+        <td>{{orders[1001].status}}</td>
+    </tr>
+</table>
+{% endblock %}

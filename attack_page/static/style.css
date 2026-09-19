@@ -1,0 +1,224 @@
+*{
+    box-sizing:border-box
+}
+
+body{
+    margin:0;
+    background:#ececec;
+    color:#222;
+    font-family:Arial,Helvetica,sans-serif
+}
+
+main{max-width:1100px;
+    margin:40px auto;
+    padding:0 25px
+}
+
+h1{
+    font-size:32px;
+    margin:0 0 10px
+}
+
+p{
+    line-height:1.6;
+    color:#555
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:25px
+}
+
+.card{
+    background:#fff;
+    border:1px solid #d3d3d3;
+    padding:22px;
+    border-radius:4px
+}
+
+.card h2{
+    font-size:21px;
+    margin-top:0
+}
+
+.btn{
+    display:inline-block;
+    background:#222;
+    color:#fff;
+    text-decoration:none;
+    padding:11px 16px;
+    border-radius:4px;
+    margin-top:10px
+}
+
+.warning{
+    background:#fff5d8;
+    border:1px solid #dec978;
+    padding:16px;
+    margin:20px 0;
+    border-radius:4px
+}
+
+.result{
+    background:#fff;
+    border:1px solid #ccc;
+    padding:28px;
+    border-radius:4px;
+    margin-top:25px
+}
+
+.success{
+    border-left:5px solid #2d7d46
+}
+
+.fail{
+    border-left:5px solid #b33
+}
+
+.progress{
+    margin-top:22px;
+    background:#f6f6f6;
+    border:1px solid #ddd;
+    padding:15px
+}
+
+#progressText{
+    font-family:monospace;
+    font-size:15px;
+    line-height:1.7;
+    max-height:420px;
+    overflow:auto
+}
+
+.bar{
+    height:12px;
+    background:#ddd;
+    margin:12px 0
+}
+
+.fill{
+    height:100%;
+    background:#333;
+    width:0
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:18px
+}
+
+td,th{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+    text-align:left
+}
+
+@media(max-width:800px){
+    .grid{grid-template-columns:1fr}
+}
+
+.terminal {
+    margin: 22px 0;
+    padding: 16px;
+    min-height: 150px;
+    max-height: 300px;
+    overflow-y: auto;
+    background: #171717;
+    color: #f1f1f1;
+    border-radius: 8px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.terminal div {
+    white-space: pre-wrap;
+}
+
+.attempt-box {
+    margin: 20px 0;
+    padding: 18px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    background: #fafafa;
+    text-align: center;
+}
+
+.attempt-box .label {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.candidate {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: 7px;
+    margin: 4px 0 8px;
+}
+
+.status {
+    font-size: 14px;
+}
+
+.steps {
+    display: grid;
+    gap: 7px;
+    margin: 20px 0;
+}
+
+.steps div {
+    padding: 9px 12px;
+    border-left: 3px solid #ccc;
+    color: #777;
+    background: #f7f7f7;
+}
+
+.steps div.active {
+    border-left-color: #222;
+    color: #222;
+}
+
+.done {
+    margin-top: 20px;
+    padding: 18px;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    background: #f5f5f5;
+}
+
+.method{
+    font-family:monospace;
+    background:#f2f2f2;
+    border:1px solid #ddd;
+    padding:9px;
+    margin:10px 0;
+    font-size:13px
+}
+
+.attack-form{
+    display:grid;
+    gap:8px;
+    margin-top:14px
+}
+
+.attack-form label{
+    font-size:13px;
+    font-weight:bold
+}
+
+.attack-form input,.attack-form select{
+    padding:9px;
+    border:1px solid #bbb;
+    border-radius:4px;
+    background:#fff
+}
+
+.attack-form button{
+    border:0;
+    cursor:pointer
+}

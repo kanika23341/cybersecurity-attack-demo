@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block content %}
+<h1>Account</h1>
+<div class="stat">
+    <b>Signed in as</b>
+    <br>
+    {{ username }}
+</div>
+<div class="stat">
+    <b>Account type</b>
+    <br>
+    {{ role }}
+</div>
+{% if role == "customer" %}
+<p>
+    <a class="btn" href="/customer">Customer area</a>
+</p>
+{% else %}
+<p>
+    <a class="btn" href="/restaurant">Restaurant area</a>
+</p>
+{% endif %}
+{% endblock %}

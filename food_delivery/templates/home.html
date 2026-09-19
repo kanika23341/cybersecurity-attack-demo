@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block content %}
+<section class="hero">
+<h1>Food delivery</h1>
+<p>Choose a meal and place an order. This is the customer-facing side of the local demonstration.</p>
+<a class="btn" href="/login">Sign in</a>
+</section>
+<h2>Menu</h2>
+<div class="grid">
+{% for item in menu %}
+<div class="card">
+    <h3>{{ item.name }}</h3>
+    <p>Available for delivery</p>
+    <div class="price">₹{{ item.price }}</div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

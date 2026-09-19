@@ -1,0 +1,48 @@
+{% extends "base.html" %}{% block content %}
+<a class="btn" href="/">Back</a>
+<div class="result {{ 'success' if result.ok else 'fail' }}">
+<div class="method"><b>Hacking method:</b> {{result.method}}</div>
+<h1>{{result.title}}</h1>
+<p>{{result.message}}</p>
+
+{% if result.show_progress %}
+<div class="progress">
+<b>Brute-force progress</b>
+<div class="bar"><div class="fill" id="fill"></div></div>
+<div id="progressText">Starting...</div>
+</div>
+<script>
+const total = {{ result.count }};
+const box = document.getElementById("progressText");
+const fill = document.getElementById("fill");
+let shown = 0;
+function draw() {
+    shown += Math.max(1, Math.floor(total / 70));
+    if (shown > total) shown = total;
+    const pct = Math.round((shown / total) * 100);
+    fill.style.width = pct + "%";
+    box.textContent =
+        "Trying 4-digit combinations...\n" +
+        "Attempts: " + shown + " / " + total + "\n" +
+        "Status: checking login response...";
+    if (shown < total) {
+        setTimeout(draw, 25);
+    } else {
+        box.textContent =
+            "Trying 4-digit combinations...\n" +
+            "Attempts: " + total + " / " + total + "\n" +
+            "Status: password accepted\n" +
+            "Restaurant access unlocked.";
+        document.getElementById("openTarget").style.display = "inline-block";
+    }
+}
+draw();
+</script>
+{% endif %}
+
+<p><b>Requests:</b> {{result.count}}</p>
+{% if result.url %}
+<a id="openTarget" class="btn" href="{{result.url}}" {% if result.show_progress %}style="display:none"{% endif %} target="_blank">Open target</a>
+{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block content %}
+<h1>Restaurant menu</h1>
+<table>
+    <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Availability</th>
+    </tr>
+    {% for item in menu %}
+    <tr>
+        <td>{{item.name}}</td>
+        <td>₹{{item.price}}</td>
+        <td>{{"Available" if item.available else "Unavailable"}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

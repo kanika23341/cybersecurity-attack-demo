@@ -1,0 +1,33 @@
+{% extends "base.html" %}{% block content %}
+<h1>Attack simulation</h1>
+<p>Each test targets the separate food-delivery application running on localhost.</p>
+<div class="warning">Local classroom lab only: 127.0.0.1:5000</div>
+<div class="grid">
+{% for id,name,desc in attacks %}
+<div class="card">
+<h2>{{name}}</h2>
+{% if id == 'brute' %}<div class="method"><b>Method:</b> Credential brute force</div>
+{% elif id == 'sqli' %}<div class="method"><b>Method:</b> SQL injection / authentication bypass</div>
+{% elif id == 'idor' %}<div class="method"><b>Method:</b> IDOR (Insecure Direct Object Reference)</div>
+{% elif id == 'menu' %}<div class="method"><b>Method:</b> Parameter tampering / broken authorization</div>
+{% elif id == 'fake_order' %}<div class="method"><b>Method:</b> API abuse / broken authorization</div>
+{% elif id == 'privilege' %}<div class="method"><b>Method:</b> Privilege escalation / forced browsing</div>
+{% elif id == 'api' %}<div class="method"><b>Method:</b> Rate-limit bypass / API abuse</div>{% endif %}
+<p>{{desc}}</p>
+{% if id == 'menu' %}
+<form action="/run/menu" method="get" class="attack-form">
+<label>Menu item</label><select name="item_id"><option value="1">Chicken Burger</option><option value="2">Veg Pizza</option><option value="3">French Fries</option><option value="4">Cold Coffee</option></select>
+<label>New price (₹)</label><input type="number" name="price" min="0" value="5" required>
+<button class="btn" type="submit">Change price</button>
+</form>
+{% elif id == 'fake_order' %}
+<form action="/run/fake_order" method="get" class="attack-form">
+<label>Item</label><select name="item_id"><option value="1">Chicken Burger</option><option value="2">Veg Pizza</option><option value="3">French Fries</option><option value="4">Cold Coffee</option></select>
+<label>Quantity</label><input type="number" name="quantity" min="1" value="3" required>
+<button class="btn" type="submit">Place fake order</button>
+</form>
+{% else %}<a class="btn" href="/run/{{id}}">Start</a>{% endif %}
+</div>
+{% endfor %}
+</div>
+{% endblock %}
